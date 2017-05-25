@@ -6,7 +6,7 @@ from filewidgets import FileInput, DirInput
 from stextview import StreamTextView
 from textview import TextView
 from tabPanel import TabPanel
-
+from scrollFrame import ScrollFrame
 
 FileChooser = FileInput
 DirChooser = DirInput

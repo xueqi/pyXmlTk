@@ -7,6 +7,7 @@ Created on May 12, 2017
 from .textview import TextView
 import Tkinter as _tk
 import Queue
+_t = object()
 class StreamTextView(TextView):
     '''
     classdocs
@@ -16,23 +17,25 @@ class StreamTextView(TextView):
         '''
         '''
         super(StreamTextView, self).__init__(parent, **kwargs)
-        self.config(state=_tk.DISABLED)
+        # self.config(state=_tk.DISABLED)
         self.queue = Queue.Queue()
         self.update_me()
-        
+
     def write(self, text):
+        print "stextview: ", text
         self.queue.put(text)
     
     def clear(self):
-        self.queue.put(None)
+        self.queue.put(_t)
     
     def update_me(self):
         
         try:
-            while  True:
+            while True:
                 line = self.queue.get_nowait()
-                if line is None:
-                    self.delete(1.0, _tk.END)
+                if line is _t:
+                    pass
+                    #self.delete(1.0, _tk.END)
                 else:
                     self.insert(_tk.END, str(line))
                 self.see(_tk.END)

@@ -16,7 +16,7 @@ class FileInput(_tk.Frame, object):
         '''
         super(FileInput, self).__init__(parent, **kwargs)
         
-        self.txt = LineEdit(self, justify = _tk.RIGHT)
+        self.txt = LineEdit(self)
         self.txt.pack(side = _tk.LEFT, fill = _tk.X, expand = True)
         self.txt.bind("<FocusOut>", self.focusOut)
         

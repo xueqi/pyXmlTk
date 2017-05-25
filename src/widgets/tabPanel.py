@@ -18,7 +18,7 @@ class _Tab(object):
         self.title = title
         self.widget = widget
         self.button = None
-class TabPanel(_tk.Frame, object):
+class _TabPanel(_tk.Frame, object):
     '''
     classdocs
     '''
@@ -44,8 +44,9 @@ class TabPanel(_tk.Frame, object):
         btn.pack(side=_tk.LEFT, fill = _tk.NONE, expand = False)
         btn.bind("<Button-1>", self._switchTab)
         tab.button = btn
+        
         self._tabs[name] = tab
-    
+        
     def _switchTab(self, event):
         ebtn = event.widget
         tabIdx = None
@@ -85,7 +86,7 @@ class TabPanel(_tk.Frame, object):
             return 
         if idx < 0 or idx >= len(self._tabs):
             return
-        if self._currentIndex > 0 and self._currentIndex < len(self._tabs):
+        if self._currentIndex >= 0 and self._currentIndex < len(self._tabs):
             self._hideTab(self._currentIndex)
         
         self._currentIndex = idx
@@ -96,9 +97,17 @@ class TabPanel(_tk.Frame, object):
         '''
         tab = self._tabs[self._tabs.keys()[idx]]
         tab.widget.pack_forget()
-    
+        tab.button.config(fg="black")
+        print("Hide %d" % idx)
     def _showTab(self, idx):
         ''' show a tab. Do not bound check
         '''
         tab = self._tabs[self._tabs.keys()[idx]]
-        tab.widget.pack(side=_tk.BOTTOM, fill=_tk.BOTH, expand = False) 
+        tab.widget.pack(fill=_tk.BOTH) 
+        tab.button.config(fg="blue")
+        print("Show %d" % idx)
+        print("Current Tab: %d" % idx)
+
+TabPanel = _TabPanel
+import ttk as _ttk
+TabPanel = _ttk.Notebook
